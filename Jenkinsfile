@@ -21,7 +21,8 @@ pipeline {
             steps {
                 // Deployment steps specific to your environment
                // echo "Deploying application..."
-               sh 'nohup java -jar target/my-webapp-1.0.0.jar > app.log 2>&1 &'
+               sh 'java -jar target/my-webapp-1.0.0.jar --server.port=8081 --server.address=0.0.0.0 &'
+
             }
         }
     }
@@ -37,4 +38,5 @@ pipeline {
             echo "Deployment failed, check logs."
         }
     }
+
 }
