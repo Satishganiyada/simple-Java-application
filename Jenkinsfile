@@ -29,16 +29,16 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+                stage('Deploy') {
             steps {
                 echo "Stopping old service (if running)..."
-                sh "sudo systemctl stop ${SERVICE_NAME} || true"
-
+                sh "sudo systemctl stop myapp.service || true"
+        
                 echo "Copying new JAR to deployment directory..."
-                sh "sudo cp target/${JAR_NAME} ${DEPLOY_DIR}/"
-
+                sh "sudo cp target/my-webapp-1.0.0.jar /home/ubuntu/simple-Java-application/"
+        
                 echo "Starting systemd service..."
-                sh "sudo systemctl start ${SERVICE_NAME}"
+                sh "sudo systemctl start myapp.service"
             }
         }
     }
@@ -55,3 +55,4 @@ pipeline {
         }
     }
 }
+
