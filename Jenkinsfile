@@ -13,30 +13,31 @@ pipeline {
             }
         }
 
-        stage('Build') {
+                stage('Build') {
             steps {
-                sh "cd ${DEPLOY_DIR} && mvn clean install"
+                sh 'mvn clean install'
             }
         }
-
+        
         stage('Test') {
             steps {
-                sh "cd ${DEPLOY_DIR} && mvn test"
+                sh 'mvn test'
             }
         }
-
+        
         stage('Deploy') {
             steps {
                 echo "Stopping old service (if running)..."
-                sh "sudo systemctl stop ${SERVICE_NAME} || true"
-
+                sh 'sudo systemctl stop myapp.service || true'
+        
                 echo "Copying new JAR to deploy directory..."
-                sh "cp ${DEPLOY_DIR}/target/my-webapp-1.0.0.jar ${DEPLOY_DIR}/"
-
+                sh 'sudo cp target/my-webapp-1.0.0.jar /home/ubuntu/simple-Java-application/'
+        
                 echo "Starting systemd service..."
-                sh "sudo systemctl start ${SERVICE_NAME}"
+                sh 'sudo systemctl start myapp.service'
             }
         }
+
     }
 
     post {
@@ -51,3 +52,4 @@ pipeline {
         }
     }
 }
+
